@@ -1,0 +1,11 @@
+# Compiled files
+cli/dist/
+backend/dist/
+
+# Node.js
+node_modules/
+package-lock.json
+
+# Environment variables
+.env
+.env.*.local

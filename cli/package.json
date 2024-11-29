@@ -1,0 +1,46 @@
+{
+  "name": "shell-sync-cli",
+  "version": "1.0.0",
+  "description": "A lightweight CLI tool for securely synchronizing your shell history across devices.",
+  "main": "bin/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node ./dist/index.js",
+    "lint": "eslint .",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "clean": "rm -rf dist",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "shell",
+    "cli",
+    "sync",
+    "history",
+    "typescript"
+  ],
+  "author": "Amal Chandru",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.7.8",
+    "colorette": "^2.0.20",
+    "commander": "^10.0.0",
+    "dotenv": "^16.0.3",
+    "inquirer": "^12.1.0",
+    "jsonwebtoken": "^9.0.0",
+    "pino": "^9.5.0",
+    "pino-multi-stream": "^6.0.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.0.0",
+    "@types/node": "^18.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.0.0",
+    "jest": "^29.0.0",
+    "pino-pretty": "^13.0.0",
+    "ts-jest": "^29.0.0",
+    "ts-node": "^10.0.0",
+    "typescript": "^5.0.0"
+  }
+}
