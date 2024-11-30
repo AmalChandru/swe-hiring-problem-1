@@ -34,3 +34,6 @@ const startServer = async (): Promise<void> => {
 
 // Initialize the server
 startServer();
+
+// Export the app for testing purposes
+export { app };
