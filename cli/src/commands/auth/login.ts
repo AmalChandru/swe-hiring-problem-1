@@ -1,12 +1,14 @@
 import inquirer from 'inquirer';
-import logger from '../../utils/logger';  
+import logger from '../../utils/logger';
 import axios from 'axios';
 import { API_URL } from '../../utils/config';
-import { saveToken } from '../../utils/tokenStorage';
+import { saveTokenAndEmail } from '../../utils/tokenStorage';
 
+/**
+ * Handles user login by prompting for credentials and authenticating with the server.
+ */
 export const loginCommand = async () => {
   try {
-    // Prompt for email and password
     const answers = await inquirer.prompt([
       {
         type: 'input',
@@ -25,27 +27,21 @@ export const loginCommand = async () => {
 
     logger.info('Logging in... Please wait.');
 
-    // Make the login API request
     const response = await axios.post(`${API_URL}/auth/login`, {
       email: answers.email,
       password: answers.password,
     });
 
-    if (response.data.token && response.data.user) {
+    const { token, user } = response.data;
+    if (token && user) {
       logger.success('Login successful!');
-      logger.info(`Welcome back, ${response.data.user.name}!`);
-      
-      // Save token for future CLI use
-      saveToken(response.data.token);
+      logger.info(`Welcome back, ${user.name}!`);
+      saveTokenAndEmail(token, user.email);
     } else {
       logger.error('Unexpected response structure from the server.');
     }
   } catch (error: any) {
-    if (error.response && error.response.data && error.response.data.message) {
-      const errorMessage = error.response.data.message;
-      logger.error(`An error occurred during login: ${errorMessage}`);
-    } else {
-      logger.error(`An error occurred during login: ${(error instanceof Error) ? error.message : 'Unknown error'}`);
-    }
+    const errorMessage = error.response?.data?.message || (error instanceof Error ? error.message : 'Unknown error');
+    logger.error(`An error occurred during login: ${errorMessage}`);
   }
 };
