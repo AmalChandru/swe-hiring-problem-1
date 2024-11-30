@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=${PORT}
+      - MONGODB_URI=${MONGODB_URI}
+      - API_SECRET=${API_SECRET}
+      - LOG_LEVEL=${LOG_LEVEL}
+    depends_on:
+      - mongo
+
+  cli:
+    build:
+      context: ./cli
+    environment:
+      - API_URL=${API_URL}
+      - HOME=${HOME}
+    depends_on:
+      - backend
+
+  mongo:
+    image: mongo:latest
+    container_name: mongodb
+    volumes:
+      - ./data/db:/data/db
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=rootpassword
+
+volumes:
+  data:

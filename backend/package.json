@@ -11,7 +11,7 @@
   ],
   "scripts": {
     "start": "ts-node src/app.ts",
-    "build": "tsc",
+    "build": "tsc ",
     "dev": "nodemon -r ts-node/register src/app.ts"
   },
   "dependencies": {
